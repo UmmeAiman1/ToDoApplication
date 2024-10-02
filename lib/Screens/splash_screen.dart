@@ -56,8 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: AppColors.primaryColor,
                     image: Image.asset(
                       'assets/images/Illustration.png',
-                      height: 300,
-                      width: 320,
+                      height: MediaQuery.of(context).size.height *0.5,
+                      width:  MediaQuery.of(context).size.width * 0.8,
                     ),
                     title: 'Manage Your \nDaily TO DO',
                     subtitle:
@@ -68,8 +68,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: AppColors.primaryColor,
                     image: Image.asset(
                       'assets/images/Illustration2.png',
-                      height: 300,
-                      width: 320,
+                      height: MediaQuery.of(context).size.height *0.5,
+                      width: MediaQuery.of(context).size.width * 0.8,
                     ),
                     title: 'Manage Your \nDaily TO DO',
                     subtitle:
@@ -80,8 +80,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: AppColors.primaryColor,
                     image: Image.asset(
                       'assets/images/Illustration3.png',
-                      height: 300,
-                      width: 320,
+                      height: MediaQuery.of(context).size.height *0.5,
+                      width: MediaQuery.of(context).size.width * 0.8,
                     ),
                     title: 'Manage Your \nDaily TO DO',
                     subtitle: "Stay on track, stay productive. \nWelcome!",
