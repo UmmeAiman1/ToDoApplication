@@ -45,8 +45,12 @@ setState(() {
   }
   void showModal({int? index}) {
 String title = index != null ? todolist[index]['title'] : '';
-String description = index != null ? todolist[index]['title'] : ''; 
+String description = index != null ? todolist[index]['description'] : ''; 
     showModalBottomSheet(
+     isScrollControlled: true,
+useSafeArea: false,
+
+
      
         context: context,
         builder: (context) => NewTask(
@@ -63,111 +67,114 @@ String description = index != null ? todolist[index]['title'] : '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModal();
-        },
-        backgroundColor: AppColors.buttonColor,
-        child: Icon(
-          Icons.add,
-          color: AppColors.primaryColor,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.textColor,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showModal();
+          },
+          backgroundColor: AppColors.buttonColor,
+          child: Icon(
+            Icons.add,
+            color: AppColors.primaryColor,
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 200,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.more_vert, color: Colors.white),
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwuPBeBM70eB74heQntpI_senW2MwWL-rLsg&s'),
-                        radius: 22,
-                      ),
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.more_vert, color: Colors.white),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwuPBeBM70eB74heQntpI_senW2MwWL-rLsg&s'),
+                          radius: 22,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 65, left: 25),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Hi ${widget.email}!',
-                        style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            fontStyle: FontStyle.italic),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 65, left: 25),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Hi ${widget.email}!',
+                          style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 85, left: 25),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Welcome to \nNotes!',
-                        style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 85, left: 25),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Welcome to \nNotes!',
+                          style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, top: 10),
-              child: Row(
-                children: [
-                  Text('My Tasks', style: TextStyles.todoListHeading),
                 ],
               ),
-            ),
-          
-            
-            Expanded(
-              child: ListView.builder(
-                itemCount: todolist.length,
-                itemBuilder: (context, index) => TodoTile(
-                  title: todolist[index]['title'],
-                  description: todolist[index]['description'],
-                  isCompleted: todolist[index]['isCompleted'] ,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      todolist[index]['isCompleted'] = value;
-                    });
-                  },
-                  onEdit: (){
-                    showModal(index: index);
-                    
-                  },
-                  onDelete: () {
-                    deleteTask(index);
-                  },
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 10),
+                child: Row(
+                  children: [
+                    Text('My Tasks', style: TextStyles.todoListHeading),
+                  ],
                 ),
               ),
-            ),
-          ],
+            
+              
+              Expanded(
+                child: ListView.builder(
+                  itemCount: todolist.length,
+                  itemBuilder: (context, index) => TodoTile(
+                    title: todolist[index]['title'],
+                    description: todolist[index]['description'],
+                    isCompleted: todolist[index]['isCompleted'] ,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        todolist[index]['isCompleted'] = value;
+                      });
+                    },
+                    onEdit: (){
+                      showModal(index: index);
+                      
+                    },
+                    onDelete: () {
+                      deleteTask(index);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
