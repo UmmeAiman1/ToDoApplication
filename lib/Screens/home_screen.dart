@@ -16,53 +16,50 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> todolist = [];
   bool isEditing = false;
-int? index;
+  int? index;
 
   void addTask(String title, String description) {
-      setState(
-        () {
-          todolist.add(
-            {'title': title,
-             'description': description, 
-             'isCompleted': false},
-          );
-        },
-      );
-    
-  }
-  void editTask(int index, String title, String description){
-setState(() {
-  
-  todolist[index]['title'] = title;
-  todolist[index]['description'] = description;
-});
+    setState(
+      () {
+        todolist.add(
+          {'title': title, 'description': description, 'isCompleted': false},
+        );
+      },
+    );
   }
 
-  void deleteTask(int index){
-   setState(() {
-     todolist.removeAt(index);
-   });
+  void editTask(int index, String title, String description) {
+    setState(() {
+      todolist[index]['title'] = title;
+      todolist[index]['description'] = description;
+    });
   }
+
+  void deleteTask(int index) {
+    setState(() {
+      todolist.removeAt(index);
+    });
+  }
+
   void showModal({int? index}) {
-String title = index != null ? todolist[index]['title'] : '';
-String description = index != null ? todolist[index]['description'] : ''; 
+    String title = index != null ? todolist[index]['title'] : '';
+    String description = index != null ? todolist[index]['description'] : '';
     showModalBottomSheet(
-     isScrollControlled: true,
-useSafeArea: false,
-
-
-     
+      backgroundColor: AppColors.primaryColor,
+        isScrollControlled: true,
+        useSafeArea: false,
         context: context,
         builder: (context) => NewTask(
             title: title,
             description: description,
-            isEditing: index !=null,
-             updateTask: (title , description ) {
+            isEditing: index != null,
+            updateTask: (title, description) {
               if (index != null) {
-  editTask(index, title, description);
-} else{
-  addTask(title, description);
-              }}));
+                editTask(index, title, description);
+              } else {
+                addTask(title, description);
+              }
+            }));
   }
 
   @override
@@ -103,9 +100,10 @@ useSafeArea: false,
                       children: [
                         Icon(Icons.more_vert, color: Colors.white),
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwuPBeBM70eB74heQntpI_senW2MwWL-rLsg&s'),
-                          radius: 22,
+                          backgroundImage: AssetImage(
+                             'assets/images/profile.png'),
+                          radius: 22
+                          ,
                         ),
                       ],
                     ),
@@ -145,27 +143,26 @@ useSafeArea: false,
                 padding: const EdgeInsets.only(left: 15, top: 10),
                 child: Row(
                   children: [
-                    Text('My Tasks', style: TextStyles.todoListHeading),
+                    Text('My Tasks',
+                        style: TextStyles.todoListHeading),
                   ],
                 ),
               ),
-            
-              
+             
               Expanded(
                 child: ListView.builder(
                   itemCount: todolist.length,
                   itemBuilder: (context, index) => TodoTile(
                     title: todolist[index]['title'],
                     description: todolist[index]['description'],
-                    isCompleted: todolist[index]['isCompleted'] ,
+                    isCompleted: todolist[index]['isCompleted'],
                     onChanged: (bool? value) {
                       setState(() {
                         todolist[index]['isCompleted'] = value;
                       });
                     },
-                    onEdit: (){
+                    onEdit: () {
                       showModal(index: index);
-                      
                     },
                     onDelete: () {
                       deleteTask(index);

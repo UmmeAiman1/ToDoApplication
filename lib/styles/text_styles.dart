@@ -4,7 +4,7 @@ import 'package:todo_app/styles/colors.dart';
 class TextStyles {
   static TextStyle headingLarge = TextStyle(
       color: AppColors.textColor, 
-      fontSize: 25, 
+      fontSize: 30, 
       fontWeight: FontWeight.bold
       );
       static TextStyle bodyText = TextStyle(
